@@ -173,3 +173,34 @@ stopButton.addEventListener('click', async () => {
 });
 
 refreshView();
+
+async function renderSessionHistory() {
+  const historyList = document.getElementById('history-list');
+  const history = await IntentTabStorage.getHistory();
+  
+  historyList.innerHTML = '';
+  
+  if (!history || history.length === 0) {
+    return;
+  }
+
+  history.slice(0, 8).forEach((item) => {
+    const li = document.createElement('li');
+    const duration = IntentTabFocus.formatDuration(item.durationSeconds || 0);
+    const intent = IntentTabUtils.safeText(item.intent).substring(0, 20);
+    li.textContent = `${intent} — ${duration}`;
+    li.title = IntentTabUtils.safeText(item.intent);
+    historyList.appendChild(li);
+  });
+}
+
+renderSessionHistory();
+
+chrome.storage.onChanged.addListener((changes) => {
+  if (changes.intentTabHistory) {
+    renderSessionHistory();
+  }
+  if (changes.intentTabSession) {
+    refreshView();
+  }
+});

@@ -26,6 +26,48 @@ body {
   font-weight: 400;
 }
 
+.session-history-card {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 280px;
+  max-height: 320px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 12px;
+  z-index: 100;
+  overflow-y: auto;
+  transition: opacity 240ms ease;
+}
+
+.history-card-title {
+  margin: 0 0 8px 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.history-card-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.history-card-list li {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.4);
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .gemini-ambient-glow-container {
   position: fixed;
   top: 50%;
@@ -468,4 +510,133 @@ body.session-is-active .google-search-bar {
   .input-line {
     padding: 16px 18px;
   }
+}
+
+/* Floating HUD - Isolated Namespace */
+.intent-tab-floating-hud {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 340px;
+  z-index: 2147483647;
+  font-family: 'Urbanist', sans-serif;
+  pointer-events: auto;
+}
+
+.intent-tab-hud-container {
+  background: rgba(0, 0, 0, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
+  color: #f8fafc;
+}
+
+.intent-tab-hud-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.intent-tab-hud-title {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #f8fafc;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.intent-tab-hud-timer {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: rgba(96, 165, 250, 0.9);
+  font-variant-numeric: tabular-nums;
+  margin-left: 8px;
+}
+
+.intent-tab-hud-subtask {
+  width: 100%;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 0.75rem;
+  color: #f8fafc;
+  font-family: 'Urbanist', sans-serif;
+  margin: 8px 0;
+  outline: none;
+  transition: border-color 180ms ease, background 180ms ease;
+}
+
+.intent-tab-hud-subtask:focus {
+  border-color: rgba(96, 165, 250, 0.3);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.intent-tab-hud-subtask::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.intent-tab-hud-expanded {
+  display: none;
+  gap: 6px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.intent-tab-hud-expanded.active {
+  display: flex;
+  flex-direction: column;
+}
+
+.intent-tab-hud-button {
+  padding: 6px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.02);
+  color: rgba(255, 255, 255, 0.7);
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 180ms ease, border-color 180ms ease;
+}
+
+.intent-tab-hud-button:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.intent-tab-hud-button.danger {
+  border-color: rgba(239, 68, 68, 0.2);
+  color: rgba(252, 165, 165, 0.9);
+}
+
+.intent-tab-hud-button.danger:hover {
+  background: rgba(239, 68, 68, 0.08);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.intent-tab-hud-toggle {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 180ms ease, transform 180ms ease;
+}
+
+.intent-tab-hud-toggle:hover {
+  color: rgba(255, 255, 255, 0.8);
+  transform: scale(1.1);
 }
