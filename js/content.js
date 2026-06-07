@@ -251,9 +251,10 @@ async function terminateSession() {
     durationSeconds
   });
 
+  // Preserve full history in storage
   chrome.storage.local.set({
     [STORAGE_KEY]: null,
-    intentTabHistory: history.slice(0, 10)
+    intentTabHistory: history
   });
 
   removeHud();
