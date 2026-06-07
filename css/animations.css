@@ -30,3 +30,14 @@
     transform: translate(-2%, -3%) scale(0.95);
   }
 }
+
+@keyframes hudSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) translateX(0);
+  }
+}

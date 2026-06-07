@@ -38,7 +38,21 @@ body {
   padding: 12px;
   z-index: 100;
   overflow-y: auto;
-  transition: opacity 240ms ease;
+  transition: opacity 240ms ease, max-height 240ms ease, transform 240ms ease;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+body.session-is-active .session-history-card {
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+  max-height: 0;
+}
+
+.session-history-card.expanded {
+  width: 340px;
+  max-height: 600px;
 }
 
 .history-card-title {
@@ -48,6 +62,13 @@ body {
   color: rgba(255, 255, 255, 0.5);
   letter-spacing: 0.04em;
   text-transform: uppercase;
+  cursor: pointer;
+  user-select: none;
+  transition: color 180ms ease;
+}
+
+.history-card-title:hover {
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .history-card-list {
@@ -208,7 +229,7 @@ body.session-is-active .gemini-ambient-glow-container {
   pointer-events: none;
   
   /* FIXED WIDTH BLOCK: No more stretching completely across the layout bounds */
-  width: min(92%, 680px); 
+  width: min(92%, 640px); 
   margin: 0 auto;
   
   /* Smooth transform transition profiles to avoid viewport flashing */
@@ -376,7 +397,7 @@ body.session-is-active .google-search-bar {
 }
 
 .session-card {
-  width: min(92%, 580px);
+  width: min(92%, 500px);
   margin: 0 auto;
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.07);
@@ -521,15 +542,17 @@ body.session-is-active .google-search-bar {
   z-index: 2147483647;
   font-family: 'Urbanist', sans-serif;
   pointer-events: auto;
+  animation: hudSlideIn 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .intent-tab-hud-container {
-  background: rgba(0, 0, 0, 0.94);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 12px;
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.96);
+  border: 1.5px solid rgba(66, 133, 244, 0.4);
+  border-radius: 14px;
+  padding: 14px;
+  box-shadow: 0 8px 32px rgba(66, 133, 244, 0.15), 0 16px 48px rgba(0, 0, 0, 0.8);
   color: #f8fafc;
+  backdrop-filter: blur(10px);
 }
 
 .intent-tab-hud-header {

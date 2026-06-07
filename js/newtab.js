@@ -174,7 +174,7 @@ stopButton.addEventListener('click', async () => {
 
 refreshView();
 
-async function renderSessionHistory() {
+async function renderSessionHistory(showAll = false) {
   const historyList = document.getElementById('history-list');
   const history = await IntentTabStorage.getHistory();
   
@@ -184,21 +184,36 @@ async function renderSessionHistory() {
     return;
   }
 
-  history.slice(0, 8).forEach((item) => {
+  const itemsToShow = showAll ? history : history.slice(0, 8);
+  
+  itemsToShow.forEach((item) => {
     const li = document.createElement('li');
     const duration = IntentTabFocus.formatDuration(item.durationSeconds || 0);
-    const intent = IntentTabUtils.safeText(item.intent).substring(0, 20);
+    const intent = IntentTabUtils.safeText(item.intent).substring(0, showAll ? 30 : 20);
     li.textContent = `${intent} — ${duration}`;
     li.title = IntentTabUtils.safeText(item.intent);
     historyList.appendChild(li);
   });
 }
 
+function toggleHistoryCardExpand() {
+  const card = document.getElementById('session-history-card');
+  const isExpanded = card.classList.toggle('expanded');
+  renderSessionHistory(isExpanded);
+}
+
+const historyTitle = document.getElementById('history-card-title');
+if (historyTitle) {
+  historyTitle.addEventListener('click', toggleHistoryCardExpand);
+}
+
 renderSessionHistory();
 
 chrome.storage.onChanged.addListener((changes) => {
   if (changes.intentTabHistory) {
-    renderSessionHistory();
+    const card = document.getElementById('session-history-card');
+    const isExpanded = card && card.classList.contains('expanded');
+    renderSessionHistory(isExpanded);
   }
   if (changes.intentTabSession) {
     refreshView();

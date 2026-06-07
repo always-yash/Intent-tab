@@ -15,8 +15,8 @@
         <div class="glow-pod pod-cyan"></div>
     </div>
 
-    <div class="session-history-card">
-      <h3 class="history-card-title">Session History</h3>
+    <div class="session-history-card" id="session-history-card">
+      <h3 class="history-card-title" id="history-card-title">Session History</h3>
       <ul class="history-card-list" id="history-list"></ul>
     </div>
     
@@ -85,13 +85,13 @@
           <div class="session-header">
             <span class="session-badge" id="session-category"></span>
             <span class="session-status">Active</span>
-          </div>
+          </div><br>
           <h2 id="session-intent" class="session-title"></h2>
           <p class="session-meta">Started <span id="session-start"></span></p>
         </div>
 
         <div class="session-metrics-side">
-          <p class="session-timer"><strong id="session-timer">00:00:00</strong></p>
+          <p class="session-timer"><strong id="session-timer">00:00:00</strong></p><br>
           <button id="stop-button" type="button" class="secondary-button">End Session</button>
         </div>
       </section>
