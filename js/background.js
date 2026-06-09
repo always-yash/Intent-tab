@@ -13,6 +13,44 @@ const DISTRACTION_HOSTS = [
   'www.facebook.com'
 ];
 
+// Inside your background service worker script
+// Inside your background service worker script
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    if (message.action === "END_AND_SAVE_SESSION") {
+        
+        // 1. Fetch current session details using your real key: intentTabSession
+        chrome.storage.local.get(['intentTabSession', 'intentTabHistory'], (result) => {
+            const activeSession = result.intentTabSession;
+            let history = result.intentTabHistory || [];
+
+            if (activeSession) {
+                const endedAt = Date.now();
+                const durationSeconds = Math.floor((endedAt - activeSession.startTime) / 1000);
+
+                // Build history item structure exactly how your app expects it
+                history.unshift({
+                    intent: activeSession.intent || 'Active Session',
+                    category: activeSession.category || 'General',
+                    startedAt: activeSession.startTime,
+                    endedAt: endedAt,
+                    durationSeconds: durationSeconds
+                });
+            }
+
+            // 2. Commit to storage and turn off active session flag by clearing intentTabSession
+            chrome.storage.local.set({ 
+                intentTabHistory: history,
+                intentTabSession: null  // Clears active session state
+            }, () => {
+                console.log("Background: Session saved. Total records:", history.length);
+                sendResponse({ success: true });
+            });
+        });
+
+        return true; // Keeps the message channel open for async response
+    }
+});
+
 function isDistractionUrl(url) {
   if (!url) {
     return false;

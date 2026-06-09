@@ -5,6 +5,8 @@ let hudTimerId = null;
 const STORAGE_KEY = 'intentTabSession';
 const HUD_CONTAINER_ID = 'intent-tab-hud-root';
 
+console.log("Intent-Tab: content.js successfully loaded on this page!");
+
 function injectHudStyles() {
   const styleId = 'intent-tab-hud-styles';
   if (document.getElementById(styleId)) {
@@ -228,36 +230,20 @@ function setupHudEventListeners() {
   endBtn?.addEventListener('click', (e) => {
     e.preventDefault();
     if (activeSession) {
+      console.log("HUD: End Session clicked. Notifying background processing script...");
       terminateSession();
     }
   });
 }
 
-async function terminateSession() {
-  const endedAt = Date.now();
-  const durationSeconds = Math.floor((endedAt - activeSession.startTime) / 1000);
-  
-  const history = await new Promise((resolve) => {
-    chrome.storage.local.get(['intentTabHistory'], (res) => {
-      resolve(res.intentTabHistory || []);
-    });
+function terminateSession() {
+  // Send message to background service worker to process data updates smoothly
+  chrome.runtime.sendMessage({ action: "END_AND_SAVE_SESSION" }, (response) => {
+      if (response && response.success) {
+          console.log("HUD: Session safely closed and logged.");
+          removeHud();
+      }
   });
-
-  history.unshift({
-    intent: activeSession.intent,
-    category: activeSession.category,
-    startedAt: activeSession.startTime,
-    endedAt,
-    durationSeconds
-  });
-
-  // Preserve full history in storage
-  chrome.storage.local.set({
-    [STORAGE_KEY]: null,
-    intentTabHistory: history
-  });
-
-  removeHud();
 }
 
 function removeHud() {

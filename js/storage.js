@@ -37,7 +37,7 @@ const IntentTabStorage = {
   async appendHistory(item) {
     const history = await this.getHistory();
     history.unshift(item);
-    // Preserve full history. If you want to cap, change here.
+    // Preserve full history array safely without hard caps or truncation
     await this.set(this.historyKey, history);
   }
 };

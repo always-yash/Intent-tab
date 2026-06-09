@@ -97,8 +97,8 @@ body.session-is-active .session-history-card {
   width: 90vw;
   max-width: 1500px;
   height: 500px;
-  filter: blur(140px);
-  opacity: 0.60;
+  filter: blur(145px);
+  opacity: 0.50;
   z-index: 1;
   pointer-events: none;
   overflow: visible;
@@ -110,8 +110,8 @@ body.session-is-active .session-history-card {
 
 body.session-is-active .gemini-ambient-glow-container {
   transform: translate(-50%, -40%) scale(1.4);
-  opacity: 0.64;
-  filter: blur(150px);
+  opacity: 0.50;
+  filter: blur(120px);
 }
 
 .glow-pod {
